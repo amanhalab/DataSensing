@@ -1,39 +1,48 @@
 class Stream {
 
   int life;
+  int maxlife;
   float mult;
+  float lastValue;
   String addr;
+  int frame;
 
   PVector p;
 
   ArrayList<Float> values = new ArrayList<Float>();
 
   Stream(String _addr){
-    life = 100;
+    maxlife = WIDTH / 2;
+    life = maxlife;
     addr = _addr;
     p = new PVector(0,0);
+    frame = 0;
   }
 
   void addValue(float value, float _mult){
-    life = 200;
+    life = maxlife;
     mult = _mult;
-    if(values.size()>=100){
-      values.clear();
-    }
-    values.add(value);
+    lastValue = value;
   }
 
   void update(){
     life--;
-    if(life < 100 && values.size() >= 1){
+    if(life < maxlife / 3 && values.size() >= 1){
       values.remove(0);
     }
+    if(frame % 2 == 0){
+      if(values.size()>=maxlife){
+        values.clear();
+      }
+      values.add(lastValue);
+    }
+    frame = (frame + 1) % 1000;
   }
 
   void display(int index, int total, color c){
 
     float h = (HEIGHT-2) * 1.0 / total;
-    float w = WIDTH / 100.0;
+    float w = WIDTH / maxlife;
 
     float val = values.size() > 0 ? values.get(0) / mult : 0.5;
 

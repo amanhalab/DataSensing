@@ -87,6 +87,8 @@ void messageReceived(String topic, byte[] payload) {
 void addStreamValue(String topic, String topicData, float value, float mult) {
 
   Grove g = groves.get(topic);
+  value = Float.isNaN(value) ? 0 : value;
+  value = constrain(value, 0, mult);
   g.addValue(topicData, value, mult);
 
 }

@@ -106,6 +106,8 @@ void addStreamValue(String topic, String topicData, float value, float mult) {
   }
 
   Stream stream = streams.get(addr);
+  value = Float.isNaN(value) ? 0 : value;
+  value = constrain(value, 0, mult);
   stream.addValue(value, mult);
 
 }
