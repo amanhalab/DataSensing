@@ -21,12 +21,12 @@ void setup() {
   // setup physics with 10% drag
   physics = new VerletPhysics2D();
   physics.setDrag(0.5f);
-  physics.setWorldBounds(new Rect(-50, -50, WIDTH + 100, HEIGHT + 100));
+  physics.setWorldBounds(new Rect(-50, -50, WIDTH * SCALEFACTOR + 100, HEIGHT * SCALEFACTOR + 100));
   // the NEW way to add gravity to the simulation, using behaviors
   //physics.addBehavior(new GravityBehavior(new Vec2D(0, 0.15f)));
 
   for (int i = 0; i < NUM_GROUPS; i++) {
-    groups.add(new Target(new Vec2D(random(WIDTH), random(HEIGHT)), new Vec2D(random(-0.5, 0.5), random(-0.5,0.5))));
+    groups.add(new Target(new Vec2D(random(WIDTH * SCALEFACTOR), random(HEIGHT * SCALEFACTOR)), new Vec2D(random(-0.5, 0.5), random(-0.5,0.5))));
   }
 
   scale.addColor(color(168, 33, 108), 100);
@@ -43,14 +43,14 @@ void addParticle(int index) {
 
   println(index + " " + i + " --- " + groups.size());
 
-  VerletParticle2D p = new VerletParticle2D(Vec2D.randomVector().scale(5).addSelf(WIDTH / 2, 0));
-  p.addBehavior(new AttractionBehavior(groups.get(i).pos, 1000, 0.8f));
+  VerletParticle2D p = new VerletParticle2D(Vec2D.randomVector().scale(5).addSelf(WIDTH * SCALEFACTOR / 2, 0));
+  p.addBehavior(new AttractionBehavior(groups.get(i).pos, 1000 * SCALEFACTOR, 0.8f));
   for (Target g : groups) {
-    p.addBehavior(new AttractionBehavior(g.pos, 10, -2.2f));
+    p.addBehavior(new AttractionBehavior(g.pos, 10 * SCALEFACTOR, -2.2f));
   }
   physics.addParticle(p);
   // add a negative attraction force field around the new particle
-  physics.addBehavior(new AttractionBehavior(p, 12, -1.2f));
+  physics.addBehavior(new AttractionBehavior(p, 12 * SCALEFACTOR, -1.2f));
 }
 
 void draw() {
@@ -88,16 +88,16 @@ void draw() {
       int bindex = j % NUM_GROUPS;
       float dist = b.distanceToSquared(a);
 
-      if (dist < 150){
+      if (dist < 150 * SCALEFACTOR){
         if(bindex != index){
-          float alpha = map(dist, 150, 0, 0, 70);
+          float alpha = map(dist, 150 * SCALEFACTOR, 0, 0, 70);
           stroke(255, alpha);
         } else {
-          float alpha = map(dist, 150, 0, 0, 40);
+          float alpha = map(dist, 150 * SCALEFACTOR, 0, 0, 40);
           stroke(c, alpha);
         }
         // stroke(c, 25);
-        line(a.x,a.y,b.x,b.y);
+        line(a.x * SCALEFACTOR,a.y * SCALEFACTOR,b.x * SCALEFACTOR,b.y * SCALEFACTOR);
       }
       j++;
 
@@ -114,7 +114,7 @@ void draw() {
     color c = scale.getColorAt((index) * 1.0 / NUM_GROUPS);
     noStroke();
     fill(c);
-    ellipse(a.x, a.y, 2,2);
+    ellipse(a.x * SCALEFACTOR, a.y * SCALEFACTOR, 2 * SCALEFACTOR, 2 * SCALEFACTOR);
     k++;
   }
 
@@ -123,31 +123,10 @@ void draw() {
   for (Target g : groups) {
 
     g.update();
-    // fill(255,20);
-    // ellipse(g.pos.x, g.pos.y, 10, 10);
+
   }
 
-  // filter(BLUR, 1);
-
 }
-
-// void mousePressed() {
-//   mousePos = new Vec2D(mouseX, mouseY);
-//   // create a new positive attraction force field around the mouse position (radius=250px)
-//   mouseAttractor = new AttractionBehavior(mousePos, 250, 0.9f);
-//   physics.addBehavior(mouseAttractor);
-// }
-//
-// void mouseDragged() {
-//   // update mouse attraction focal point
-//   mousePos.set(mouseX, mouseY);
-// }
-//
-// void mouseReleased() {
-//   // remove the mouse attraction when button has been released
-//   physics.removeBehavior(mouseAttractor);
-// }
-
 
 
 class Target {
@@ -159,14 +138,14 @@ class Target {
   void update() {
     pos.x += velo.x;
     pos.y += velo.y;
-    if (pos.x > WIDTH) {
+    if (pos.x > WIDTH * SCALEFACTOR) {
       velo.x *= -1;
       pos.x--;
     } else if(pos.x < 0){
       velo.x *= -1;
       pos.x++;
     }
-    if (pos.y > HEIGHT) {
+    if (pos.y > HEIGHT * SCALEFACTOR) {
       velo.y *= -1;
       pos.y--;
     } else if(pos.y < 0){
