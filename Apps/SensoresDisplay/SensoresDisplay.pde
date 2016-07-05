@@ -11,6 +11,7 @@ ColorScale scale = new ColorScale();
 void setup() {
 
   smooth();
+  background(0);
 
   // try connect mqqt
 
@@ -68,9 +69,9 @@ void messageReceived(String topic, byte[] payload) {
 
   if (topics[topics.length-1].endsWith("data")) {
 
-    float rotary = json.getJSONObject("rotary_r").getInt("angle");
-    float light = json.getJSONObject("light_r").getInt("level");
-    float ranger = json.getJSONObject("ranger_r").getInt("distance");
+    float rotary = json.getJSONObject("rotary_r").getFloat("angle");
+    float light = json.getJSONObject("light_r").getFloat("level");
+    float ranger = json.getJSONObject("ranger_r").getFloat("distance");
     float button = json.getJSONObject("button_r").getFloat("pressed");
 
     addStreamValue(topics[0], "rotary", rotary, 1023.0);
