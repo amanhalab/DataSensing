@@ -89,7 +89,7 @@ class Grove {
   }
 
   void displayIdle() {
-    display(color(20), true);
+    display(color(40), true);
   }
 
 }
