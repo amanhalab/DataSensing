@@ -5,7 +5,7 @@ DataEngineCMX engine;
 String yesterday;
 
 int simulation_time = 4 * 60 * 60;
-int num_radars = 20;
+int num_radars = 18;
 
 float timer_x = 80;
 float hue = 0;
