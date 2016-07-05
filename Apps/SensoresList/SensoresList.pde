@@ -10,7 +10,9 @@ ColorScale scale = new ColorScale();
 float angle_loading = 0;
 
 void setup() {
-
+  
+  background(0);
+  
   client = new MQTTClient(this);
   // client.connect("mqtt://localhost", "ledpanel");
   client.connect("mqtt://10.0.105.9:1883", "ledpanel");
