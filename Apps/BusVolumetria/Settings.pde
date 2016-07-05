@@ -14,17 +14,17 @@ void settings() {
       SCALEDHEIGHT = config.getInt("scaledHeight");
       SCALED = config.getBoolean("scaled");
       if(SCALED){
-        size(SCALEDWIDTH, SCALEDHEIGHT, P2D);
+        size(SCALEDWIDTH, SCALEDHEIGHT, FX2D);
         SCALEFACTOR = 1.0 * SCALEDWIDTH / WIDTH;
         OFFSET = (int)((SCALEDHEIGHT - HEIGHT * SCALEFACTOR) * 0.5);
       } else {
-        size(WIDTH, HEIGHT, P2D);
+        size(WIDTH, HEIGHT, FX2D);
       }
     } catch(Exception e) {
       SCALED = false;
       WIDTH = 1040;
       HEIGHT = 160;
-      size(WIDTH, HEIGHT, P2D);
+      size(WIDTH, HEIGHT, FX2D);
     }
     fullScreen(1);
 }

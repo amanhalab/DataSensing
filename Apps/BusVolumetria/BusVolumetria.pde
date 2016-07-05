@@ -128,13 +128,13 @@ void drawFlowGrid() {
       }
     }
 
-    float alpha = min(100, map(s, minSize, maxSize, 15, 100));
+    float alpha = min(100, map(s, minSize, maxSize, 40, 150));
 
     strokeWeight(1);
     stroke(255, alpha);
 
-    fill(0, 200);
-    //ellipse(p.x, OFFSET + p.y, s, s);
+    fill(0);
+
     ellipse(p.x * SCALEFACTOR, OFFSET + p.y * SCALEFACTOR, s * SCALEFACTOR, s * SCALEFACTOR);
   }
 
