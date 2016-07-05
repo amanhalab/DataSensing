@@ -79,11 +79,11 @@ void messageReceived(String topic, byte[] payload) {
 
   if (topics[topics.length-1].endsWith("data")) {
 
-    float rotary = json.getJSONObject("rotary_r").getInt("angle");
-    float light = json.getJSONObject("light_r").getInt("level");
-    float ranger = json.getJSONObject("ranger_r").getInt("distance");
-    float temperature = json.getJSONObject("thermometer_r").getInt("temperature");
-    float humidity = json.getJSONObject("thermometer_r").getInt("humidity");
+    float rotary = json.getJSONObject("rotary_r").getFloat("angle");
+    float light = json.getJSONObject("light_r").getFloat("level");
+    float ranger = json.getJSONObject("ranger_r").getFloat("distance");
+    float temperature = json.getJSONObject("thermometer_r").getFloat("temperature");
+    float humidity = json.getJSONObject("thermometer_r").getFloat("humidity");
     float button = json.getJSONObject("button_r").getFloat("pressed");
 
     addStreamValue(topics[0], "rotary", rotary, 1023.0);
@@ -95,8 +95,8 @@ void messageReceived(String topic, byte[] payload) {
 
   }
 
-  println(topics[0] + " -- " + topics[topics.length-1] + " -- " + json);
-
+  //println(topics[0] + " -- " + topics[topics.length-1] + " -- " + json);
+  println(topics[0]);
 }
 
 void addStreamValue(String topic, String topicData, float value, float mult) {
