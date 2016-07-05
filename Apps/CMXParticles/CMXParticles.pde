@@ -2,8 +2,8 @@ import toxi.geom.*;
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;
 
-int NUM_PARTICLES = 800;
-int NUM_GROUPS = 8;
+int NUM_PARTICLES = 1000;
+int NUM_GROUPS = 16;
 
 ColorScale scale = new ColorScale();
 
@@ -93,7 +93,7 @@ void draw() {
           float alpha = map(dist, 150 * SCALEFACTOR, 0, 0, 70);
           stroke(255, alpha);
         } else {
-          float alpha = map(dist, 150 * SCALEFACTOR, 0, 0, 40);
+          float alpha = map(dist, 150 * SCALEFACTOR, 0, 0, 70);
           stroke(c, alpha);
         }
         // stroke(c, 25);
