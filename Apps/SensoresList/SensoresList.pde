@@ -13,7 +13,7 @@ void setup() {
 
   client = new MQTTClient(this);
   // client.connect("mqtt://localhost", "ledpanel");
-  client.connect("mqtt://10.97.20.202:1883", "ledpanel");
+  client.connect("mqtt://10.0.105.9:1883", "ledpanel");
   client.subscribe("#");
 
   font = loadFont("FFFCorporate-8.vlw");
@@ -63,7 +63,7 @@ void draw() {
     fill(128 + val);
     //ellipse(width * 0.5, height * 0.5, 10, 10);
     textAlign(CENTER, CENTER);
-    text("aguardando dados dos sensores", width * 0.5, height * 0.5);
+    text("aguardando dados dos sensores", WIDTH * 0.5, HEIGHT * 0.5);
 
   }
 

@@ -12,9 +12,11 @@ void setup() {
 
   smooth();
 
+  // try connect mqqt
+
   client = new MQTTClient(this);
-  // client.connect("mqtt://localhost", "sensores_display");
-  client.connect("mqtt://10.97.20.202:1883", "sensores_display");
+  client.connect("mqtt://10.0.105.9:1883", "sensores_display");
+  //client.connect("mqtt://localhost", "sensores_display");
   client.subscribe("#");
 
   font = loadFont("FFFCorporate-8.vlw");
@@ -41,8 +43,6 @@ void draw() {
   int total = groves.size();
   int k = 0;
 
-
-
   Iterator<Map.Entry<String, Grove>> iter = groves.entrySet().iterator();
   while (iter.hasNext()) {
     Map.Entry<String, Grove> entry = iter.next();
@@ -57,7 +57,6 @@ void draw() {
       k++;
     }
   }
-
 
 }
 

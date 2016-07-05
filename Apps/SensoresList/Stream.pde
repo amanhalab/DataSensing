@@ -32,16 +32,19 @@ class Stream {
 
   void display(int index, int total, color c){
 
-    float h = (height-2) * 1.0 / total;
-    float w = width / 100.0;
+    float h = (HEIGHT-2) * 1.0 / total;
+    float w = WIDTH / 100.0;
 
     float val = values.size() > 0 ? values.get(0) / mult : 0.5;
 
     noStroke();
     fill(c);
 
-    int lastValue = int(values.get(values.size()-1));
+    int lastValue = 0;
 
+if(values.size()>0){
+     lastValue = int(values.get(values.size()-1));
+}
     textAlign(LEFT, CENTER);
     text(addr + "/" + lastValue, 10, index * h + h * 0.5);
 
