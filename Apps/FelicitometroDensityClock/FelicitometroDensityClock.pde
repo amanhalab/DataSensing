@@ -9,13 +9,16 @@ int timer = 0;
 int timer_max = 60 * 60 * 24;
 int timer_increment = 16;
 
-Channel[] channels = new Channel[10];
+int numChannels = 5;
+Channel[] channels = new Channel[numChannels];
 
 float timer_x = 110;
 
 void setup() {
 
   smooth(8);
+  
+  background(0);
 
   pg = createGraphics(width, height, P2D);
   pg.beginDraw();
@@ -25,7 +28,7 @@ void setup() {
   font = loadFont("FFFEstudio-8.vlw");
   textFont(font, 8);
 
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < numChannels; i++){
     channels[i] = new Channel(i);
   }
 
@@ -59,8 +62,8 @@ void drawDensityClock() {
 
   pg.blendMode(ADD);
 
-  for(int i = 0; i < 10; i++){
-    channels[i].display(pg, scale.getColorAt(i * 1.0 / 10), 700, 1000, 910 + i * 11, timer);
+  for(int i = 0; i < numChannels; i++){
+    channels[i].display(pg, scale.getColorAt(i * 1.0 / numChannels), 700, 1000, 950 + i * 11, timer);
   }
   pg.endDraw();
 
@@ -84,7 +87,7 @@ void drawClockNumbers(){
     } else {
       fill(50);
     }
-    float radius = 1000 + 30;
+    float radius = 1000+20;
     float x = 700 + sin(radians(angle)) * radius;
     float y = 1000 + cos(radians(angle)) * radius;
     pushMatrix();
