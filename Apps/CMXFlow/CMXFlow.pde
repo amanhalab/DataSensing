@@ -15,7 +15,9 @@ int fMin = 100;
 
 
 void setup() {
-
+  
+  background(0);
+  
   for (int i = 0; i < antenas.length; i++) {
     int h = (int)(HEIGHT * SCALEFACTOR / antenas.length);
     antenas[i] = new FlowGenerator((int)random(100), i * h, h );
