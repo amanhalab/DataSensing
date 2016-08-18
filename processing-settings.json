@@ -1,6 +1,7 @@
 {
 
   "scaled" : false,
+  "fullscreen": true,
 
   "width"  : 1040,
   "height" : 160,
