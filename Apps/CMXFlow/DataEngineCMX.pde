@@ -240,6 +240,9 @@ class DataEngineCMX {
   // clear cache: files older than 15 days
   void clearCache() {
     File folder = new File(sketchPath("") + "/cache/");
+    if(!folder.exists()){
+      folder.mkdir();
+    }
     File[] listOfFiles = folder.listFiles();
     for (int i = 0; i < listOfFiles.length; i++) {
       if (listOfFiles[i].isFile()) {
