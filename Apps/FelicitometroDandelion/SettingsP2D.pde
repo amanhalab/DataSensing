@@ -1,7 +1,7 @@
 JSONObject config;
 
 int WIDTH, HEIGHT, SCALEDWIDTH, SCALEDHEIGHT;
-boolean SCALED;
+boolean SCALED, FULLSCREEN;
 float SCALEFACTOR = 1.0;
 int OFFSET = 0;
 
@@ -13,6 +13,7 @@ void settings() {
       SCALEDWIDTH = config.getInt("scaledWidth");
       SCALEDHEIGHT = config.getInt("scaledHeight");
       SCALED = config.getBoolean("scaled");
+      FULLSCREEN = config.getBoolean("fullScreen");
       if(SCALED){
         size(SCALEDWIDTH, SCALEDHEIGHT, P2D);
         SCALEFACTOR = 1.0 * SCALEDWIDTH / WIDTH;
@@ -22,9 +23,10 @@ void settings() {
       }
     } catch(Exception e) {
       SCALED = false;
+      FULLSCREEN = false;
       WIDTH = 1040;
       HEIGHT = 160;
       size(WIDTH, HEIGHT, P2D);
     }
-    fullScreen(1);
+    if(FULLSCREEN) fullScreen(1);
 }
