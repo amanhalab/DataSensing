@@ -68,7 +68,7 @@ void drawLoading() {
 
   text(yesterday, 15, baseHeight - 55);
   text("NUM  " + engine.num_records, 15, baseHeight - 35);
-  //text("ANTENAS  " + engine.num_cmx, 15, baseHeight - 15);
+  text("USUARIOS  " + engine.num_cmx, 15, baseHeight - 15);
 }
 
 void drawTimer() {
@@ -78,13 +78,13 @@ void drawTimer() {
   int baseHeight = OFFSET + int(HEIGHT * SCALEFACTOR);
 
   if (simulation_time % (60 * 60) < 60 * 20) {
-  //  text("USUARIOS", 15, baseHeight - 15);
+    text("USUARIOS", 15, baseHeight - 15);
     timer_x += (100 - timer_x) * 0.2;
   } else {
     timer_x += (15 - timer_x) * 0.2;
   }
 
-  text(getTime(simulation_time), timer_x, 15);
+  text(getTime(simulation_time), timer_x, baseHeight - 15);
 }
 
 void drawVis() {
