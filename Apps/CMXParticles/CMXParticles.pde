@@ -35,6 +35,8 @@ void setup() {
   scale.addColor(color(248, 220, 105), 50);
   scale.addColor(color(46, 150, 152), 100);
 
+  surface.setTitle("processing_vis");
+
 }
 
 void addParticle(int index) {

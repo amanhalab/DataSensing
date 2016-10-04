@@ -60,6 +60,8 @@ void setup() {
     particles.add(p);
   }
 
+  surface.setTitle("processing_vis");
+
 }
 
 

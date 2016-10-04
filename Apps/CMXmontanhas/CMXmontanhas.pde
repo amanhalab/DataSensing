@@ -34,8 +34,8 @@ void setup() {
   // Shader
   blur = loadShader("blur.glsl");
   
-  // frameRate
-  frameRate(300);
+  surface.setTitle("processing_vis");
+  
 }
 
 

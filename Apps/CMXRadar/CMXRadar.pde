@@ -41,6 +41,8 @@ void setup() {
   engine = new DataEngineCMX();
   thread("loadDataEngineJSON");
 
+  surface.setTitle("processing_vis");
+  
 }
 
 void draw() {

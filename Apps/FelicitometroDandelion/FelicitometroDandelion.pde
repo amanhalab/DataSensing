@@ -10,20 +10,22 @@ float timer_x = 80;
 
 void setup() {
 
-    colorMode(HSB);
+  colorMode(HSB);
 
-    // Tipografia
-    font = loadFont("FFFEstudio-8.vlw");
-    textFont(font, 8);
+  // Tipografia
+  font = loadFont("FFFEstudio-8.vlw");
+  textFont(font, 8);
 
-    flowers = new ArrayList<FlowerGenerator>();
+  flowers = new ArrayList<FlowerGenerator>();
 
-    for(int i = 0; i < num_flowers; i++){
-      float x = map(i, 0, (num_flowers-1), 80, WIDTH - 80);
-      float hue = map(i, 0, (num_flowers-1), 0, 255);
-      flowers.add(new FlowerGenerator(x,color(hue,255,255),(int)random(3,12)));
-    }
+  for(int i = 0; i < num_flowers; i++){
+    float x = map(i, 0, (num_flowers-1), 80, WIDTH - 80);
+    float hue = map(i, 0, (num_flowers-1), 0, 255);
+    flowers.add(new FlowerGenerator(x,color(hue,255,255),(int)random(3,12)));
+  }
 
+  surface.setTitle("processing_vis");
+  
 }
 
 void draw() {

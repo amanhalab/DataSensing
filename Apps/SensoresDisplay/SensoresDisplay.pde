@@ -33,6 +33,8 @@ void setup() {
     groves.put("kit" + nf(i, 2), new Grove("kit" + nf(i, 2), new PVector(75 + (i-1) * (WIDTH-50) / 10, HEIGHT * 0.5)));
   }
 
+  surface.setTitle("processing_vis");
+
 }
 
 void draw() {

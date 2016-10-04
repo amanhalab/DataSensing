@@ -15,7 +15,7 @@ int fMin = 100;
 
 
 void setup() {
-  
+
   background(0);
   
   for (int i = 0; i < antenas.length; i++) {
@@ -39,6 +39,8 @@ void setup() {
   pg.background(0);
   pg.endDraw();
 
+  surface.setTitle("processing_vis");
+  
 }
 
 

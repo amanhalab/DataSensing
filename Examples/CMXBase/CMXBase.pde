@@ -23,6 +23,8 @@ void setup() {
   font = loadFont("FFFEstudio-8.vlw");
   textFont(font, 8);
 
+  surface.setTitle("processing_vis");
+  
 }
 
 

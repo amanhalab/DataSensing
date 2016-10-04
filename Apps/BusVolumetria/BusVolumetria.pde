@@ -21,6 +21,8 @@ void setup() {
   // Carregar dados
   engine = new DataEngineBus();
   thread("loadDataEngineJSON");
+
+  surface.setTitle("processing_vis");
 }
 
 

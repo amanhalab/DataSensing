@@ -27,6 +27,8 @@ void setup() {
   scale.addColor(color(248, 220, 105), 10);
   scale.addColor(color(46, 150, 152), 10);
 
+  surface.setTitle("processing_vis");
+
 }
 
 void draw() {
