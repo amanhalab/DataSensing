@@ -6,21 +6,21 @@ float MapValues(float dado, String type) {
   float maxOut = 350;
 
   if (type == "PASSERBY") {
-    maxIn = 8000;
+    maxIn = 10000;
     
-    maxOut = 600;
-    minOut = -10;
+    maxOut = 500;
+    minOut = 0;
   } else 
   if (type == "VISITORS") {
-    maxIn = 550;
-    
-    maxOut = 300;
-    minOut = -7;
+    maxIn = 800;
+
+    maxOut = 500;
+    minOut = 0;
   } else 
   if (type == "CONNECTED") {
-    maxIn = 65;
+    maxIn = 85;
     
-    maxOut = 150;
+    maxOut = 500;
     minOut = 0;
   }
   

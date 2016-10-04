@@ -52,17 +52,16 @@ class Landscape {
     passerbyData = MapValues(cmx.passerby, "PASSERBY");     // Função passando o dado de passerby
     visitorsData = MapValues(cmx.visitors, "VISITORS");     // "  "  "  "  "  "  "  "  " visitors
     connectedData= MapValues(cmx.connected, "CONNECTED");   // "  "  "  "  "  "  "  "  " connected
-
     xoff = 0;
     for (int x = 0; x < cols; x++) {
-      z_0[x][0] = constrain(map(noise(xoff, yoff), 0, 1, -passerbyData, passerbyData), 0, 500);
-      xoff -= 0.05;
-      z_1[x][0] = constrain(map(noise(xoff, yoff), 0, 1, -visitorsData, visitorsData), 0, 500) + 10/(x+1);
-      xoff -= 0.06;
-      z_2[x][0] = constrain(map(noise(xoff, yoff), 0, 1, -connectedData, connectedData), 0, 500);
-      xoff -= 0.07;
+      z_0[x][0] = (2*noise(xoff, yoff)-1)/2 * passerbyData*1.5;
+      xoff -= 0.11;
+      z_1[x][0] =  (2*noise(xoff, yoff)-1)/1.8 * visitorsData;
+      xoff -= 0.11;
+      z_2[x][0] =  (2*noise(xoff, yoff)-1)/2 * connectedData/1.5;
+      xoff -= 0.11;
     }
-    yoff += 0.1;
+    yoff += 0.2 -random(1)/20;
 
     /*
     // show interpolated numbers
@@ -85,11 +84,13 @@ class Landscape {
     background(0);
 
     // Change height of the camera with mouseY
-    camera(0.0, mouseX, 220.0, // eyeX, eyeY, eyeZ
+    camera(0.0, 308, 220.0, // eyeX, eyeY, eyeZ
       0.0, 0.0, 0.0, // centerX, centerY, centerZ
       0.0, 1.0, 0.0); // upX, upY, upZ
-    //println(mouseX);
-    translate(-width+446, 20, 80);
+   // println(mouseX);
+  //  println(mouseY);
+
+    translate(-width+342,77, 80);
 
     for (int x = cols-1; x > 0; x--) {
       for (int y = rows-1; y > 0; y--) {  
@@ -98,7 +99,7 @@ class Landscape {
         z_2[x][y] = z_2[x][y-1];
       }
     }
-    int gap = 65;
+    int gap = 80;
     posY = 0;
     for (int x = 1; x < cols-1; x++) {
       float jpos = 0;
@@ -112,7 +113,7 @@ class Landscape {
 
         //passerby
         stroke( 255*noise(jpos/1.0), 255-255*noise(jpos/1.0), 255);
-        line(posX*scl, (posY)*scl-gap, z_0[x][y], posX*scl+scl, (posY)*scl-gap, z_0[x][y+1]);
+        line(posX*scl, (posY)*scl-gap*2 + x*15, z_0[x][y], posX*scl+scl, (posY)*scl-gap*2 + x*15, z_0[x][y+1]);
         //visitors
         stroke( 255-255*noise(jpos/1.0), 255*noise(jpos/1.0), 255);
         line(posX*scl, (posY)*scl, z_1[x][y], posX*scl+scl, (posY)*scl, z_1[x][y+1]);
@@ -126,6 +127,6 @@ class Landscape {
 
     // Shader Blur
     filter(blur);
-    filter(BLUR, 0.5);
+    filter(BLUR, 0.6);
   }
 }

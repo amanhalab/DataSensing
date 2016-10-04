@@ -29,7 +29,7 @@ void setup() {
   textFont(font, 8);
 
   // create landscape object
-  land = new Landscape(20, 100, 1200);
+  land = new Landscape(20, 120, 1400);
 
   // Shader
   blur = loadShader("blur.glsl");
