@@ -26,7 +26,7 @@ void settings() {
       FULLSCREEN = false;
       WIDTH = 1040;
       HEIGHT = 160;
-      size(WIDTH, HEIGHT, P2D);
+      size(WIDTH, HEIGHT, P3D);
     }
     if(FULLSCREEN) fullScreen(1);
 }
