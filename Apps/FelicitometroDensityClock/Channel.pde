@@ -14,6 +14,8 @@ class Channel {
 
     index = _index;
 
+    // TODO: FROM RANDOM TO REAL VALUES
+
     for(int i = 0; i < 24; i++){
       if(random(10) < 7){
         density[i] = (int)random(numMin, numMax/2);

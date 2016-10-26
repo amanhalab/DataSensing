@@ -2,6 +2,7 @@ import java.text.*;
 
 PFont font;
 PGraphics pg;
+DataEngine engine;
 
 ColorScale scale = new ColorScale();
 
@@ -39,18 +40,50 @@ void setup() {
   scale.addColor(color(46, 150, 152), 100);
 
   surface.setTitle("processing_vis");
+
+  // Carregar dados
+  // parametro: quantos dias para tras
+  engine = new DataEngine(90);
+  thread("loadDataEngineJSON");
   
 }
+
+// THREAD
+
+void loadDataEngineJSON() {
+  engine.loadJSON();
+}
+
+// DRAW
 
 void draw() {
 
   background(0);
 
-  drawDensityClock();
-  drawClockNumbers();
-  drawTimer();
+  switch (engine.state) {
+    case 0:
+      drawLoading();
+      break;
+    case 1:
+      drawDensityClock();
+      drawClockNumbers();
+      drawTimer();
+      timer = (timer + timer_increment) % timer_max;
+      break;
+  }
 
-  timer = (timer + timer_increment) % timer_max;
+}
+
+// LOADING
+
+void drawLoading(){
+
+  fill(255);
+
+  int baseHeight = OFFSET + int(HEIGHT * SCALEFACTOR);
+
+  text("ANALISANDO FELICITOMETRO", 15, baseHeight - 35);
+  text("NOS ÚLTIMOS 30 DIAS", 15, baseHeight - 15);
 
 }
 
