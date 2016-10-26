@@ -43,7 +43,7 @@ void draw() {
 
 }
 
-// Loading
+// LOADING
 
 void drawLoading(){
 
@@ -56,7 +56,7 @@ void drawLoading(){
 
 }
 
-// Vis
+// VIS
 
 void drawVis() {
 
