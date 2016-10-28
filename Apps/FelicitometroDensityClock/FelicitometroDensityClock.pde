@@ -7,10 +7,11 @@ DataEngine engine;
 ColorScale scale = new ColorScale();
 
 int timer = 0;
-int timer_max = 60 * 60 * 24;
+int timer_max = 60 * 60 * 30;
 int timer_increment = 16;
 
 int numChannels = 5;
+int numChannelsLoaded = 0;
 Channel[] channels = new Channel[numChannels];
 
 float timer_x = 110;
@@ -29,10 +30,6 @@ void setup() {
   font = loadFont("FFFEstudio-8.vlw");
   textFont(font, 8);
 
-  for(int i = 0; i < numChannels; i++){
-    channels[i] = new Channel(i);
-  }
-
   scale.addColor(color(168, 33, 108), 100);
   scale.addColor(color(237, 27, 77), 50);
   scale.addColor(color(243, 108, 68), 50);
@@ -43,7 +40,7 @@ void setup() {
 
   // Carregar dados
   // parametro: quantos dias para tras
-  engine = new DataEngine(90);
+  engine = new DataEngine(30);
   thread("loadDataEngineJSON");
   
 }
@@ -65,6 +62,17 @@ void draw() {
       drawLoading();
       break;
     case 1:
+      
+      for (Map.Entry entry : engine.scores.descendingMap().entrySet()) {
+        Integer id = (Integer)(entry.getValue());
+        Poi p = engine.pois.get(id);
+        if(numChannelsLoaded < numChannels){
+          channels[numChannelsLoaded] = new Channel(numChannelsLoaded, p, engine.minval, engine.maxval);
+          numChannelsLoaded++;
+        } else {
+          break;
+        }
+      }
       drawDensityClock();
       drawClockNumbers();
       drawTimer();
@@ -112,8 +120,8 @@ void drawClockNumbers(){
   float angle_ini = 195;
   float angle_out = 210;
 
-  for(int i = 0; i < 24; i++){
-    float angle = 195 - 1 + timer * 15.0 / (60 * 60) - i * 15;
+  for(int i = 0; i < 30; i++){
+    float angle = 195 + timer * 12.0 / (60 * 60) - i * 12;
     if (angle > angle_in && angle < angle_out){
       fill(map(angle, angle_in + 2, angle_out, 255, 50));
       if(angle < angle_ini){
@@ -130,7 +138,7 @@ void drawClockNumbers(){
     rotate(radians(180-angle));
     textSize(16);
     textAlign(CENTER, CENTER);
-    text(i+":00", 0, 0);
+    text(engine.monthdays.get(i), 0, 0);
     popMatrix();
   }
 
@@ -145,6 +153,9 @@ void drawTimer() {
   textSize(8);
   textAlign(LEFT, CENTER);
 
+  text("FELICITOMETRO", 15, baseHeight - 15);
+
+  /*
   if((timer / (60 * 60)) % 2 == 0){
     text("FELICIDADE", 15, baseHeight - 15);
     timer_x += (110 - timer_x) * 0.2;
@@ -153,6 +164,7 @@ void drawTimer() {
   }
 
   text(getTime(timer), timer_x, baseHeight - 15);
+  */
 
 }
 

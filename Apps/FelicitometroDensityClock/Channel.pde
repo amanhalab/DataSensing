@@ -1,7 +1,6 @@
 class Channel {
 
-  int[] density = new int[24];
-
+  int minval, maxval;
   int numMax = 100;
   int numMin = 10;
 
@@ -9,20 +8,14 @@ class Channel {
   float yoff = 0;
 
   int index;
+  Poi poi;
 
-  Channel(int _index){
+  Channel(int _index, Poi _poi, int _minval, int _maxval){
 
     index = _index;
-
-    // TODO: FROM RANDOM TO REAL VALUES
-
-    for(int i = 0; i < 24; i++){
-      if(random(10) < 7){
-        density[i] = (int)random(numMin, numMax/2);
-      } else {
-        density[i] = (int)random(numMin, numMax);
-      }
-    }
+    poi = _poi;
+    minval = _minval;
+    maxval = _maxval;
 
   }
 
@@ -31,33 +24,31 @@ class Channel {
     xoff += 0.002;
     yoff += 0.004;
 
-    float angle = 195 + timer * 15.0 / (60 * 60);
+    float angle = 184 + timer * 12.0 / (60 * 60);
 
-    int current_hour = (timer / (60 * 60)) % 24;
+    int current_hour = (timer / (60 * 60)) % 30;
 
     pg.pushMatrix();
 
       pg.translate(x * SCALEFACTOR, y * SCALEFACTOR);
 
-      displayHour(pg, c, (current_hour + 23) % 24, angle, radius);
+      displayHour(pg, c, (current_hour + 29) % 30, angle, radius);
       displayHour(pg, c, current_hour, angle, radius);
 
       for(int i = 1; i < 5; i++){
-        int next_hour = (current_hour + i) % 24;
+        int next_hour = (current_hour + i) % 30;
         displayHour(pg, c, next_hour, angle, radius);
       }
 
     pg.popMatrix();
 
-
-    //println(timer+" - "+current_hour);
-
   }
 
   void displayHour(PGraphics pg, color c, int hour, float angle, float radius){
 
-    int num = density[hour];
-    float angle_step = 15.0 / num;
+    int num = int(map(poi.count.get(hour), minval, maxval, numMin, numMax));
+
+    float angle_step = 12.0 / num;
 
     pg.noStroke();
 
@@ -67,7 +58,7 @@ class Channel {
 
     for(int i = 0; i < num; i++){
 
-      float a = angle_step * i + angle - hour * 15;
+      float a = angle_step * i + angle - hour * 12;
       a += noise(i) * angle_step + noise(xoff + i * angle_step * 0.5, index) * angle_step * 5;
       a = a % 360;
 

@@ -8,7 +8,9 @@ class DataEngine {
   String datastore = "b60f2405-4e0d-4459-ac52-aff1eabd9734";
   String path = server +"/api/action/datastore_search_sql?sql=";
 
-  int state;
+  ArrayList<String> monthdays;
+
+  int state, maxval, minval;
 
   JSONObject json;
 
@@ -16,17 +18,22 @@ class DataEngine {
   TreeMap<Integer, Integer> scores;
 
   Calendar calDaysAgo, calToday;
-  SimpleDateFormat dt, dtfile;
+  SimpleDateFormat dt, dtfile, dtday;
 
   DataEngine(int days) {
 
     pois = new HashMap<Integer, Poi>();
     scores = new TreeMap<Integer, Integer>();
+    monthdays = new ArrayList<String>();
     
     state = 0;
 
+    maxval = -1;
+    minval = -1;
+
     dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     dtfile = new SimpleDateFormat("yyyy-MM-dd--HH-mm");
+    dtday = new SimpleDateFormat("dd MMM", new Locale("pt"));
 
     calDaysAgo = new GregorianCalendar();
     calDaysAgo.add(Calendar.DATE, -days);
@@ -41,6 +48,15 @@ class DataEngine {
     calToday.set(Calendar.MINUTE, 0);
     calToday.set(Calendar.SECOND, 0);
     calToday.set(Calendar.MILLISECOND, 0);
+
+    // ArrayList "monthdays" with all the days in String format
+
+    for(int i = 0; i < days; i++) {
+      Calendar calClone = (Calendar) calDaysAgo.clone();
+      calClone.add(Calendar.DATE, i);
+      String monthday = dtday.format(calClone.getTime());
+      monthdays.add(monthday.toUpperCase());
+    }
 
   }
 
@@ -110,6 +126,17 @@ class DataEngine {
       String poi_name = record.getString("poi_name");
       String datetime = record.getString("datetime");
 
+      // if max and min value not started
+
+      if(maxval + minval == -2){
+        maxval = count;
+        minval = count;
+      } else {
+        maxval = max(maxval,count);
+        minval = min(minval,count);
+      }
+      
+
       if (!pois.containsKey(poi_id)) {
         pois.put(poi_id, new Poi(poi_name, poi_id, datetime));
       }
@@ -131,6 +158,10 @@ class DataEngine {
       Poi p = pois.get(id);
       println(nf(p.score,5) + "      " + p.name);
     }
+
+    println();
+    println("min is " + minval + ", max is " + maxval);
+    println();
 
     println();
     println();
