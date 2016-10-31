@@ -62,7 +62,6 @@ void draw() {
       drawLoading();
       break;
     case 1:
-      
       for (Map.Entry entry : engine.scores.descendingMap().entrySet()) {
         Integer id = (Integer)(entry.getValue());
         Poi p = engine.pois.get(id);
@@ -73,6 +72,8 @@ void draw() {
           break;
         }
       }
+      engine.state = 2;
+    case 2:
       drawDensityClock();
       drawClockNumbers();
       drawTimer();
