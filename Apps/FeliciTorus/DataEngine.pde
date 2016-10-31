@@ -9,7 +9,8 @@ class DataEngine {
   String path = server +"/api/action/datastore_search_sql?sql=";
 
   int state;
-
+  int days;
+  int startingDay = 60;
   JSONObject json;
 
   ArrayList<FeliciDate> felicidates;
@@ -17,7 +18,9 @@ class DataEngine {
   Calendar calMonthAgo, calToday;
   SimpleDateFormat dt, dtfile;
 
-  DataEngine(int days) {
+  DataEngine(int _days) {
+    
+    days = _days + startingDay;
 
     felicidates = new ArrayList<FeliciDate>();
     
@@ -34,7 +37,7 @@ class DataEngine {
     calMonthAgo.set(Calendar.MILLISECOND, 0);
 
     calToday = new GregorianCalendar();
-    //calendarEnd.add(Calendar.DATE, -1);
+    calToday.add(Calendar.DATE, -startingDay);
     calToday.set(Calendar.HOUR_OF_DAY, 0);
     calToday.set(Calendar.MINUTE, 0);
     calToday.set(Calendar.SECOND, 0);
@@ -106,7 +109,7 @@ class DataEngine {
       int count = record.getInt("count");
       String datetime = record.getString("datetime");
 
-      felicidates.add(new FeliciDate(datetime, count));
+      felicidates.add(new FeliciDate(datetime, count, i));
       
       println("-- " + nf(i,2) + " " + datetime + " => count: " + count);
 
