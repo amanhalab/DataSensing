@@ -1,11 +1,14 @@
 import java.text.*;
 
 PFont font;
+DataEngine engine;
 
 ArrayList<FlowerGenerator> flowers;
 int num_flowers = 10;
 
 int frame = 0;
+int dayframes = 300;
+
 float timer_x = 80;
 
 void setup() {
@@ -18,17 +21,65 @@ void setup() {
 
   flowers = new ArrayList<FlowerGenerator>();
 
-  for(int i = 0; i < num_flowers; i++){
-    float x = map(i, 0, (num_flowers-1), 80, WIDTH - 80);
-    float hue = map(i, 0, (num_flowers-1), 0, 255);
-    flowers.add(new FlowerGenerator(x,color(hue,255,255),(int)random(3,12)));
-  }
-
   surface.setTitle("processing_vis");
   
+  // Carregar dados
+  // parametro: quantos dias para tras
+  engine = new DataEngine(30);
+  thread("loadDataEngineJSON");
 }
 
+// THREAD
+
+void loadDataEngineJSON() {
+  engine.loadJSON();
+}
+
+// DRAW
 void draw() {
+  
+  background(0);
+
+  switch (engine.state) {
+
+    case 0:
+      drawLoading();
+      break;
+
+    case 1:
+
+      for(int i = 0; i < num_flowers; i++){
+        float x = map(i, 0, (num_flowers-1), 80, WIDTH - 80);
+        float hue = map(i, 0, (num_flowers-1), 0, 255);
+        flowers.add(new FlowerGenerator(x, color(hue,255,255)));
+      }
+
+      engine.state = 2;
+      break;
+
+    case 2:
+      drawVis();
+      break;
+  }
+
+}
+
+// LOADING
+
+void drawLoading(){
+
+  fill(255);
+
+  int baseHeight = OFFSET + int(HEIGHT * SCALEFACTOR);
+
+  text("ANALISANDO FELICITOMETRO", 15, baseHeight - 35);
+  text("NOS ÚLTIMOS 30 DIAS", 15, baseHeight - 15);
+
+}
+
+// VIS
+
+void drawVis() {
 
   colorMode(RGB);
   background(0);
@@ -36,28 +87,33 @@ void draw() {
 
   colorMode(HSB);
 
-  for (FlowerGenerator f : flowers) {
+  int i = 0;
+
+  for (Map.Entry entry : engine.scores.descendingMap().entrySet()) {
+        
+    Integer id = (Integer)(entry.getValue());
+    Poi p = engine.pois.get(id);
+    int val = (int)map(p.count.get(frame / dayframes), engine.minval, engine.maxval, 3, 12);
+    
+    FlowerGenerator f = flowers.get(i);
+
     f.update();
 
-    if(frame % (f.val > 5 ? 60 : 120) == 0){
-      f.add(f.val, f.c, 0.05, 0.5);
+    if(frame % (val > 5 ? 15 : 30) == 0){
+      f.add(val, f.c, 0.05, 0.5);
     }
 
-    if(frame % (60 * 20) == 0 ){
-      if(random(0,10) < 8){
-        f.val = (int)random(3,6);
-      } else {
-        f.val = (int)random(6,12);
-      }
+    if(i >= num_flowers - 1){
+      break;
     }
+
+    i++;
+    
   }
 
-
-
-  frame = (frame + 5) % (24 * 60 * 60);
+  frame = (frame + 1) % (30 * dayframes);
 
 }
-
 
 void polygon(float x, float y, float radius, int npoints) {
   float angle = TWO_PI / npoints;
@@ -70,31 +126,20 @@ void polygon(float x, float y, float radius, int npoints) {
   endShape(CLOSE);
 }
 
-
-String getTime(int unixtime) {
-
-  DecimalFormat df = new DecimalFormat("00");
-
-  int hours = floor(unixtime / (60 * 60));
-  int minutes = floor(unixtime / 60) % 60;
-
-  return df.format(hours) + "h" + df.format(minutes) + "m";
-
-}
-
 void drawTimer() {
-
 
   fill(255);
   //text(yesterday + " às " + getTime(simulation_time), 15, height - 15);
 
-  if((frame / (60 * 60)) % 2 == 0){
+  if((frame / (dayframes * 3)) % 2 == 0){
     text("FELICIDADE", 15, height - 15);
     timer_x += (110 - timer_x) * 0.2;
   } else {
     timer_x += (15 - timer_x) * 0.2;
   }
 
-  text(getTime(frame), timer_x, HEIGHT - 15);
+  float daytime = (float)(frame % dayframes) / dayframes;
+
+  text(engine.monthdays.get(frame / dayframes) + " - " + nf((int)(daytime * 24),2) + "H", timer_x, HEIGHT - 15);
 
 }
