@@ -16,7 +16,7 @@ void setup() {
   // try connect mqqt
 
   client = new MQTTClient(this);
-  client.connect("mqtt://10.0.105.9:1883", "sensores_display");
+  client.connect("mqtt://192.168.137.200:1883", "sensores_display");
   //client.connect("mqtt://localhost", "sensores_display");
   client.subscribe("#");
 
@@ -71,10 +71,10 @@ void messageReceived(String topic, byte[] payload) {
 
   if (topics[topics.length-1].endsWith("data")) {
 
-    float rotary = json.getJSONObject("rotary_r").getFloat("angle");
-    float light = json.getJSONObject("light_r").getFloat("level");
-    float ranger = json.getJSONObject("ranger_r").getFloat("distance");
-    float button = json.getJSONObject("button_r").getFloat("pressed");
+    float rotary = json.getJSONObject( topics[0] + "_rotary").getFloat("angle");
+    float light = json.getJSONObject(topics[0] + "_light").getFloat("level");
+    float ranger = json.getJSONObject(topics[0] + "_ranger").getFloat("distance");
+    float button = json.getJSONObject(topics[0] + "_button").getFloat("pressed");
 
     addStreamValue(topics[0], "rotary", rotary, 1023.0);
     addStreamValue(topics[0], "light", light, 1023.0);
