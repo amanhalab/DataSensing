@@ -16,7 +16,7 @@ void setup() {
   // try connect mqqt
 
   client = new MQTTClient(this);
-  client.connect("mqtt://192.168.137.200:1883", "sensores_display");
+  client.connect("mqtt://10.0.105.180:1883", "sensores_display");
   //client.connect("mqtt://localhost", "sensores_display");
   client.subscribe("#");
 
