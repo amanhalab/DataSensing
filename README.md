@@ -1,5 +1,12 @@
 # DataSensing
-###  Rio de Janeiro – Urban Innovation
+
+### Dados e criatividade
+
+Uma iniciativa da Cisco e do Museu do Amanhã para incentivar a inovação e o uso da tecnologia e dos dados pela comunidade.
+A parceria tecnológica inclui a criação do "DataSensing - Experiências na Internet das Coisas (IoT)" no Laboratório de Atividades do Amanhã (LAA). O espaço oferece cursos e roteiros de desenvolvimento criativo em IoT, bem como painéis de visualização artística feitos a partir de dados abertos.
+
+
+###  Open Smart Data
 
 Para o Projeto de Inovação Urbana Porto Maravilha a Cisco posicionou sensores pela área do porto e também criou sistemas para a construção de um grande banco de dados abertos sobre a Cidade do Rio de Janeiro, em especial sobre o Porto Maravilha. Estes dados estão publicamente hospedados e disponíveis através do site Open Smart Data.
 
@@ -13,6 +20,8 @@ Foi utilizada a linguagem livre Processing (versão 3.x) em todos as visualizaç
 
 
 ### Bibliotecas requeridas
+
+Algumas visualizações requerem instalação de uma ou mais bibliotecas extras listadas abaixo:
 
 - [Mesh](http://leebyron.com/mesh/)
 - [Toxic Libs](http://toxiclibs.org/downloads/)
