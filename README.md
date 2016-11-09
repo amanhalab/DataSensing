@@ -25,3 +25,4 @@ Algumas visualizações requerem instalação de uma ou mais bibliotecas extras 
 
 - [Mesh](http://leebyron.com/mesh/)
 - [Toxic Libs](http://toxiclibs.org/downloads/)
+- [ColorScale](https://github.com/sulram/P5VisTools/tree/master/ColorScaleExample)
