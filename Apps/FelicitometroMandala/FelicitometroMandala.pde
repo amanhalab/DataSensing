@@ -10,7 +10,8 @@ boolean isNull;
 PShader blur;
 
 long startTimer;
-int duration = 7000;
+int duration = 0;
+int minDuration = 1000;
 
 int totalDays = 30;
 int counter = 0;
@@ -97,7 +98,9 @@ void drawDate() {
 
   float alpha;
 
-  alpha = (millis() - ps.startTimer)/7;
+  alpha = abs(millis() - ps.startTimer)/2;
+
+ // println("alpha: " + alpha);
 
   int baseHeight = height/2; 
   if (ps.currentDate != "") {
@@ -108,7 +111,7 @@ void drawDate() {
       fill(255, 255 -alpha/2.5);
     }
     if (!isNull) {
-      text(ps.currentDate, width/2 - textWidth(ps.currentDate)/2, height-20);
+      text(ps.currentDate, WIDTH/2 - textWidth(ps.currentDate)/2, HEIGHT-20);
     }
   }
   //println("Current Date: " + currentDate);
@@ -135,6 +138,8 @@ void drawVis() {
         if (f.value > 1) {
           isNull = false;
           ps.init(f.day, f.value, f.id);
+          duration = max(minDuration, f.value*10);
+          println("current count: " + f.value);
           adding = true;
         } else {
           // if it is, start counter again with no text()

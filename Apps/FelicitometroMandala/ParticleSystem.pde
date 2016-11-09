@@ -11,7 +11,8 @@ class ParticleSystem {
   float orbit;
   float limitTime;
 
-  float rand;
+  int rand;
+  float Velocityf;
   float minVel;
   float maxVel;
 
@@ -64,17 +65,16 @@ class ParticleSystem {
     //time gap between subobjects creation
     limitTime = 500 + random(total/2);
 
-    int um = 1;
     //random value that will define velocity in each particle group
     // rand = random(-startingPoints, startingPoints)/2;
-    rand =  random(0.2, startingPoints/1.5);
-    if (value < 10) {
-      rand =  random(0.05, 0.75);
-    } else if (value < 4) {
-      rand =  random(0.02, 0.08);
-    }
+    rand =  int(random(1, 10));
 
-    um *= -1;
+    //set velocity
+    if (total < 50) {
+      Velocityf = total/150.0;
+    } else {
+      Velocityf = total/75.0;
+    }
 
     isInitialized = true;
   }
@@ -87,10 +87,10 @@ class ParticleSystem {
         cont++;
         if (cont == 1) {
           println("total: "+ total + " sPoints: "+ startingPoints);
-          println("rancom velocity value: " + rand);
+          println("random velocity value: " + Velocityf);
           println("particle created");
         }
-        particles.add(new Particle(total/startingPoints, orbit, cont, startingPoints, rand));
+        particles.add(new Particle(total/startingPoints, orbit, cont, startingPoints, Velocityf));
         currentPart = particles.get(particles.size()-1);
         isReleased = false;
 
@@ -114,7 +114,7 @@ class ParticleSystem {
     currentTime = millis();
     for (Particle part : particles) {
       // if particles already passed X times the screen width, erase from memory
-      if (part.radius[0].x > width*3) {
+      if (part.radius[0].x > WIDTH*5) {
         destroyObject = true;
       }
       if (previousSize != particles.size()) {
@@ -131,8 +131,8 @@ class ParticleSystem {
     }
     // check if last point of the object was released
     if (currentPart != null && currentPart.isReleased == true && isReleased == false) {
-      //start timer
-      startTimer = millis() - 500;
+      //start timer plus minDuration
+      startTimer = millis() + 1000;
       isReleased = true;
     }
   }

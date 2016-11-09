@@ -21,6 +21,7 @@ class Particle {
   //are all particles out of the 0, 0 radius ?
   boolean isReleased = false;
 
+  float baseSize;
 
   // vectos points lists for each point
   PVector [] center;
@@ -39,7 +40,7 @@ class Particle {
   float rand;
 
   Particle(int _value, float _orbit, int _currentObject, int _totalObjects, float _rand) {
-
+    // setting incoming values comming from function to the class variables 
     value = _value;
     orbit = _orbit;
     rand = _rand;
@@ -48,6 +49,11 @@ class Particle {
     currentObject = _currentObject;
 
     println(currentObject + " " + totalObjects);
+
+    baseSize = 1.9;
+    if (value < 5) {
+      baseSize += 2;
+    }
 
     center = new PVector[value];
     pos = new PVector[value];
@@ -85,11 +91,15 @@ class Particle {
       radius[i] = new PVector(0, 0, random(-5, 5));
       vel[i] = rand;
       counter[i] = 0;
-      size[i] = random(0.8, 1.5);
       angle[i] = random(360);
       colors[i] = color(255, 0, 255);
-    }
+      if (value<5) {
+        size[i] = random(1.4, 1.9);
+      } else {
+        size[i] = random(0.8, 1.4);
 
+      }
+    }
   }
 
   void run() {  
@@ -107,18 +117,18 @@ class Particle {
 
     for (int i=0; i<count; i++) {
       //set values;
-      angle[i] = 1- count/value;
+      angle[i] = count/value;
       counter[i] +=  vel[i];
       pos[i].x = sin(counter[i]) * radius[i].x;
       pos[i].y = cos(counter[i]) * radius[i].y;
       pos[i].z = sin(counter[i] + angle[i]) * orbit_angle;
 
       if (isOver) {
-        radius[i].x+=0.5 * 1.1;
-        radius[i].y+=0.5 * 1.1;
+        radius[i].x+=0.44;
+        radius[i].y+=0.44;
       } else {
-        radius[count].x+=0.5 * 1.1;
-        radius[count].y+=0.5 * 1.1;
+        radius[count].x+=0.44;
+        radius[count].y+=0.44;
       }
       // check for moment in which the object is completely released from center 
       if (currentObject == totalObjects) {
@@ -139,9 +149,9 @@ class Particle {
 
   void render() {
 
-    translate(width/2, height/2, -100);
-    rotateX(8.8 -PI/2);
-    rotateY(4.72-PI/2);
+    translate(WIDTH/2, HEIGHT/2, 0);
+  //  rotateX(8.8 -PI/2);
+  //  rotateY(4.72-PI/2);
 
     // translate(-width/2, -height/2);
 

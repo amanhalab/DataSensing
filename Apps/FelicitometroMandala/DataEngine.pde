@@ -10,7 +10,7 @@ class DataEngine {
 
   int state;
   int days;
-  int startingDay = 60;
+  int startingDay = 100;
   JSONObject json;
 
   ArrayList<FeliciDate> felicidates;
