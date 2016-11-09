@@ -3,8 +3,8 @@
   "scaled" : false,
   "fullScreen": false,
 
-  "width"  : 1040,
-  "height" : 160,
+  "width"  : 864,
+  "height" : 144,
 
   "scaledWidth"  : 1920,
   "scaledHeight" : 1080
